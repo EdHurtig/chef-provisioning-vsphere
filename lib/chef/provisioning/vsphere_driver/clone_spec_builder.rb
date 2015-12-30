@@ -70,11 +70,11 @@ module ChefProvisioningVsphere
 
       if options[:use_linked_clone]
         if vm_template.config.template
-          Chef::Log.warn("Using a VM Template, ignoring use_linked_clone.")
-        else
-          vsphere_helper.create_delta_disk(vm_template)
-          rspec.diskMoveType = :moveChildMostDiskBacking
+          Chef::Log.warn("Using a VM Template and use_linked_clone is might cause issues in certain environments.")
         end
+        vsphere_helper.create_delta_disk(vm_template)
+        rspec.diskMoveType = :moveChildMostDiskBacking
+      
       end
 
       unless options[:datastore].to_s.empty?
